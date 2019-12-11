@@ -1,10 +1,12 @@
 {
-  "name": "gdoc-parser",
+  "name": "gdoc-json-parser",
   "version": "0.1.0",
-  "description": "Google Docs Parser",
-  "main": "index.js",
+  "description": "Google Docs JSON Parser",
+  "main": "dist/parser.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -Rf dist/",
+    "start": "parcel src/index.html",
+    "build-prod": "parcel build src/parser.js"
   },
   "keywords": [
     "googledocs",
@@ -12,5 +14,8 @@
     "parser"
   ],
   "author": "Alessio Michelini",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
 }

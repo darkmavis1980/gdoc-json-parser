@@ -1,0 +1,16 @@
+{
+  "name": "gdoc-parser",
+  "version": "0.1.0",
+  "description": "Google Docs Parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "googledocs",
+    "google",
+    "parser"
+  ],
+  "author": "Alessio Michelini",
+  "license": "ISC"
+}

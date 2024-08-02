@@ -1,4 +1,253 @@
-parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"CUYV":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=exports.TYPES=void 0;var t=4,n="",e="",a="10pt",o="400",r=[{key:"top",class:"borderTop"},{key:"bottom",class:"borderBottom"}],c={bold:function(t){return"<strong>".concat(t,"</strong> ")},underline:function(t){return"<u>".concat(t,"</u> ")},italic:function(t){return"<i>".concat(t,"</i> ")},link:function(t,n){return' <a href="'.concat(n.link.url,'">').concat(t,"</a> ")},fontSize:function(t,n){return 16===n.fontSize.magnitude?"<h2>".concat(t,"</h2>"):t}},l=function(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"p",e=t.content,r=t.textStyle;if(""!==(e=e.replace(/(\r\n|\n|\r|)/gm,"").replace(/(\u000b)/gm,"<br />").trim())){if(!n)return e;Object.keys(r).map(function(t){c[t]&&r[t]&&(e=c[t](e,r))});var l=[];return r&&(r.fontSize&&"".concat(r.fontSize.magnitude).concat(r.fontSize.unit.toLowerCase())!==a&&l.push("font-size: ".concat(r.fontSize.magnitude).concat(r.fontSize.unit.toLowerCase())),r.weightedFontFamily&&r.weightedFontFamily.weight&&r.weightedFontFamily.weight.toString()!==o&&l.push("font-weight: ".concat(r.weightedFontFamily.weight))),l.length>0?"<".concat(n,' style="').concat(l.join(";"),'">').concat(e,"</").concat(n,">"):e}},i=function(n){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:t,a=[];if(n){var o=n.indentStart,r=n.alignment;o&&(a.push("text-indent: -".concat(o.magnitude/e||0).concat(o.unit.toLowerCase())),a.push("padding-left: ".concat(o.magnitude/(e/2)||0).concat(o.unit.toLowerCase()))),"END"===r&&a.push("text-align: right"),"CENTER"===r&&a.push("text-align: center")}return a},u=function(t){return t.color.rgbColor&&Object.keys(t.color.rgbColor).length>0?"rgb(".concat(t.color.rgbColor.red,", ").concat(t.color.rgbColor.green,", ").concat(t.color.rgbColor.blue,")"):"#000"},s=function(t){var n=t.paragraph,e=n.elements,a=n.bullet,o=t.paragraphStyle,r="p",c=1===e.length?"div":"span",u=i(o);return a&&(r="li"),"<".concat(r).concat(u.length>0?' style="'+u.join(";")+'"':"",">").concat(e.map(function(t){if(t.textRun)return l(t.textRun,c)}).join(""),"</").concat(r,">")},p=function(t){return t.content.map(function(t){if(t.paragraph){var n=1===t.paragraph.elements.length?"div":"span",e=i(t.paragraph.paragraphStyle);return"<".concat("div").concat(e.length>0?' style="'+e.join(";")+'"':"",">").concat(t.paragraph.elements.map(function(t){return t.textRun&&t.textRun?l(t.textRun,n):""}).join(""),"</").concat("div",">")}return""}).join("")},g=function(t){var n=t.map(function(t){var n=t.tableCells,e=1,a=n.map(function(t){if(e>1)return e--,null;var n=[],a=[];return t.tableCellStyle.rowSpan>1&&n.push('rowspan="'.concat(t.tableCellStyle.rowSpan,'"')),t.tableCellStyle.columnSpan>1&&(e=t.tableCellStyle.columnSpan,n.push('colspan="'.concat(t.tableCellStyle.columnSpan,'"'))),r.forEach(function(n){t.tableCellStyle[n.class]&&(a.push("border-".concat(n.key,"-width: ").concat(t.tableCellStyle[n.class].width.magnitude).concat(t.tableCellStyle[n.class].width.unit.toLowerCase())),a.push("border-".concat(n.key,"-color: ").concat(u(t.tableCellStyle[n.class].color))),a.push("border-".concat(n.key,"-style: solid")))}),a.length>0&&n.push('style="'.concat(a.join(";"),'"')),n.length>0?"<td ".concat(n.join(" "),">\n        ").concat(p(t),"\n        </td>"):"<td>".concat(p(t),"</td>")}).join("");return"<tr>".concat(a,"</tr>")}).join("");return"<tbody>".concat(n,"</tbody>")},h=function(t){var n=t.map(function(t){return"FIXED_WIDTH"===t.widthType?'<th width="'.concat(t.width.magnitude).concat(t.width.unit.toLowerCase(),'"></th>'):"<th></th>"}).join("");return"<thead><tr>".concat(n,"</tr></thead>")},d=function(t){var a=t.table,o=a.tableStyle,r=a.tableRows;return'<div class="'.concat(n,'">\n    <table style="border-collapse: collapse;" class="').concat(e,'">\n      ').concat(h(o.tableColumnProperties),"\n\n      ").concat(g(r),"\n    </table>\n  </div>")},f=function(){return""},b={paragraph:s,table:d,sectionBreak:f};function y(t){var n=t.content,e=t.lists,a=n.filter(function(t){return t.paragraph&&t.paragraph.bullet}),o=Object.keys(e).filter(function(t){return a.filter(function(n){return n.paragraph.bullet.listId===t}).length>0}),r={openTags:{},closeTags:{}};return o.forEach(function(t){var n=a.filter(function(n){return t===n.paragraph.bullet.listId&&!n.paragraph.bullet.nestingLevel}),o=n[0],c=n[n.length-1],l="UPPER_ALPHA"===e[t].listProperties.nestingLevels[0].glyphType?"ol":"ul";r.openTags[o.startIndex]="<".concat(l,">"),r.closeTags[c.startIndex]="</".concat(l,">");var i=a.filter(function(n){return t===n.paragraph.bullet.listId&&n.paragraph.bullet.nestingLevel});if(i.length>0){var u=i[0],s=i[i.length-1],p="UPPER_ALPHA"===e[t].listProperties.nestingLevels[1].glyphType?"ol":"ul";r.openTags[u.startIndex]="<".concat(p,">"),r.closeTags[s.startIndex]="</".concat(p,">")}}),r}exports.TYPES=b;var m=function(t){var n=y({content:t.body.content,lists:t.lists});return t.body.content.map(function(t){var e="";return n.openTags[t.startIndex]&&(e+=n.openTags[t.startIndex]),e+=Object.keys(b).map(function(n){if(t[n])return b[n](t)}).join(""),n.closeTags[t.startIndex]&&(e+=n.closeTags[t.startIndex]),e}).join("")},v=m;exports.default=v;
-},{}]},{},["CUYV"], null)
-//# sourceMappingURL=/parser.js.map
+
+function $parcel$defineInteropFlag(a) {
+  Object.defineProperty(a, '__esModule', {value: true, configurable: true});
+}
+
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
+
+$parcel$defineInteropFlag(module.exports);
+
+$parcel$export(module.exports, "TYPES", () => $5dd49e5016284773$export$426db7a6155b7a80);
+$parcel$export(module.exports, "default", () => $5dd49e5016284773$export$2e2bcd8739ae039);
+// The higher number the smaller the indentation gets
+const $5dd49e5016284773$var$TEXT_INDENT_RATIO = 4;
+const $5dd49e5016284773$var$TABLE_WRAPPER_CLASS = "";
+const $5dd49e5016284773$var$TABLE_CLASS = "";
+const $5dd49e5016284773$var$BASE_FONT_SIZE = "10pt";
+const $5dd49e5016284773$var$BASE_FONT_WEIGHT = "400";
+const $5dd49e5016284773$var$borders = [
+    {
+        key: "top",
+        class: "borderTop"
+    },
+    {
+        key: "bottom",
+        class: "borderBottom"
+    }
+];
+const $5dd49e5016284773$var$formatStyles = {
+    bold: (text)=>`<strong>${text}</strong> `,
+    underline: (text)=>`<u>${text}</u> `,
+    italic: (text)=>`<i>${text}</i> `,
+    link: (text, textStyle)=>` <a href="${textStyle.link.url}">${text}</a> `,
+    fontSize: (text, textStyle)=>{
+        if (textStyle.fontSize.magnitude === 16) return `<h2>${text}</h2>`;
+        return text;
+    }
+};
+/**
+ * @description Parses the textRun node and returns a cleaned up text wrapped in an html element
+ * @param {Object} text The text node with the content and eventual textStyle
+ * @param {String|Boolean} wrapperElement Wrapper element for the text, set to false will return the cleaned up text without a wrapping element
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parseText = (text, wrapperElement = "p")=>{
+    let { content: content, textStyle: textStyle } = text;
+    content = content.replace(/(\r\n|\n|\r|)/gm, "").replace(/(\u000b)/gm, "<br />").trim();
+    if (content === "") return;
+    if (!wrapperElement) return content;
+    Object.keys(textStyle).map((key)=>{
+        if ($5dd49e5016284773$var$formatStyles[key] && textStyle[key]) content = $5dd49e5016284773$var$formatStyles[key](content, textStyle);
+    });
+    const styles = [];
+    if (textStyle) {
+        if (textStyle.fontSize && `${textStyle.fontSize.magnitude}${textStyle.fontSize.unit.toLowerCase()}` !== $5dd49e5016284773$var$BASE_FONT_SIZE) styles.push(`font-size: ${textStyle.fontSize.magnitude}${textStyle.fontSize.unit.toLowerCase()}`);
+        if (textStyle.weightedFontFamily && textStyle.weightedFontFamily.weight && textStyle.weightedFontFamily.weight.toString() !== $5dd49e5016284773$var$BASE_FONT_WEIGHT) styles.push(`font-weight: ${textStyle.weightedFontFamily.weight}`);
+    }
+    if (styles.length > 0) return `<${wrapperElement} style="${styles.join(";")}">${content}</${wrapperElement}>`;
+    return content;
+};
+/**
+ * @description Parses the paragraphStyles and return an array with styles to be applied to the element
+ * @param {Object} paragraphStyle Object containing the node style properties
+ * @param {Number} indent_ratio Ratio of indentation, if set to 1, it will map as stored in the source node, bigger than one
+ *                              will cut the indentation, to be more friendly to confined widths
+ * @returns {Array}
+ */ const $5dd49e5016284773$var$getNodeStyle = (paragraphStyle, indent_ratio = $5dd49e5016284773$var$TEXT_INDENT_RATIO)=>{
+    const styles = [];
+    if (paragraphStyle) {
+        const { indentStart: indentStart, alignment: alignment } = paragraphStyle;
+        if (indentStart) {
+            //styles.push(`text-indent: -${indentStart.magnitude || 0}${indentStart.unit.toLowerCase()}`);
+            styles.push(`text-indent: -${indentStart.magnitude / indent_ratio || 0}${indentStart.unit.toLowerCase()}`);
+            styles.push(`padding-left: ${indentStart.magnitude / (indent_ratio / 2) || 0}${indentStart.unit.toLowerCase()}`);
+        }
+        if (alignment === "END") styles.push("text-align: right");
+        if (alignment === "CENTER") styles.push("text-align: center");
+    }
+    return styles;
+};
+/**
+ * @description Translates the colorAttr object into an rgb value usable for inline styles
+ * @param {Object} colorAttr Color object data
+ * @returns {String}
+ */ const $5dd49e5016284773$var$getColor = (colorAttr)=>{
+    if (colorAttr.color.rgbColor && Object.keys(colorAttr.color.rgbColor).length > 0) return `rgb(${colorAttr.color.rgbColor.red}, ${colorAttr.color.rgbColor.green}, ${colorAttr.color.rgbColor.blue})`;
+    return "#000";
+};
+/**
+ * @description Parse a paragraph node and return an html string as a result
+ * @param {Object} item The document node item representing a paragraph
+ * @param {Object} item.paragraph The paragraph object
+ * @param {Object} item.paragraphStyle The style to apply to the paragraph
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parseParagraph = (item)=>{
+    const { elements: elements, bullet: bullet } = item.paragraph;
+    const { paragraphStyle: paragraphStyle } = item;
+    let wrapperElement = "p";
+    const wrapper = elements.length === 1 ? "div" : "span";
+    const styles = $5dd49e5016284773$var$getNodeStyle(paragraphStyle);
+    if (bullet) wrapperElement = "li";
+    return `<${wrapperElement}${styles.length > 0 ? ' style="' + styles.join(";") + '"' : ""}>${elements.map((element)=>{
+        if (element.textRun) return $5dd49e5016284773$var$parseText(element.textRun, wrapper);
+    }).join("")}</${wrapperElement}>`;
+};
+/**
+ * @description Similar to parseParagraph, but specific to a table cell
+ * @param {Object} cell The document node item representing a table cell
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parseCell = (cell)=>{
+    const { content: content } = cell;
+    return content.map((line)=>{
+        if (line.paragraph) {
+            const wrapperElement = "div";
+            const wrapper = line.paragraph.elements.length === 1 ? "div" : "span";
+            const styles = $5dd49e5016284773$var$getNodeStyle(line.paragraph.paragraphStyle);
+            return `<${wrapperElement}${styles.length > 0 ? ' style="' + styles.join(";") + '"' : ""}>${line.paragraph.elements.map((element)=>{
+                if (element.textRun && element.textRun) return $5dd49e5016284773$var$parseText(element.textRun, wrapper);
+                return "";
+            }).join("")}</${wrapperElement}>`;
+        }
+        return "";
+    }).join("");
+};
+/**
+ * @description Parses the rows of a table node and create the relative html code for it
+ * @param {Array} rows The array of rows
+ * @returns {String}
+ */ const $5dd49e5016284773$var$createTableRows = (rows)=>{
+    const htmlRows = rows.map((row)=>{
+        const { tableCells: tableCells } = row;
+        let colSpanCounter = 1;
+        const htmlRow = tableCells.map((cell)=>{
+            // Removes columns covered by a previous colspan
+            if (colSpanCounter > 1) {
+                colSpanCounter--;
+                return null;
+            }
+            const props = [];
+            const styles = [];
+            if (cell.tableCellStyle.rowSpan > 1) props.push(`rowspan="${cell.tableCellStyle.rowSpan}"`);
+            if (cell.tableCellStyle.columnSpan > 1) {
+                colSpanCounter = cell.tableCellStyle.columnSpan;
+                props.push(`colspan="${cell.tableCellStyle.columnSpan}"`);
+            }
+            $5dd49e5016284773$var$borders.forEach((border)=>{
+                if (cell.tableCellStyle[border.class]) {
+                    styles.push(`border-${border.key}-width: ${cell.tableCellStyle[border.class].width.magnitude}${cell.tableCellStyle[border.class].width.unit.toLowerCase()}`);
+                    styles.push(`border-${border.key}-color: ${$5dd49e5016284773$var$getColor(cell.tableCellStyle[border.class].color)}`);
+                    styles.push(`border-${border.key}-style: solid`);
+                }
+            });
+            if (styles.length > 0) props.push(`style="${styles.join(";")}"`);
+            if (props.length > 0) return `<td ${props.join(" ")}>
+        ${$5dd49e5016284773$var$parseCell(cell)}
+        </td>`;
+            return `<td>${$5dd49e5016284773$var$parseCell(cell)}</td>`;
+        }).join("");
+        return `<tr>${htmlRow}</tr>`;
+    }).join("");
+    return `<tbody>${htmlRows}</tbody>`;
+};
+/**
+ * @description Read the columns array and creates the eventual <thead> html element
+ * @param {Array} columns Array of columns objects
+ * @returns {String}
+ */ const $5dd49e5016284773$var$createTableHead = (columns)=>{
+    const htmlColumns = columns.map((column)=>{
+        if (column.widthType === "FIXED_WIDTH") return `<th width="${column.width.magnitude}${column.width.unit.toLowerCase()}"></th>`;
+        return "<th></th>";
+    }).join("");
+    return `<thead><tr>${htmlColumns}</tr></thead>`;
+};
+/**
+ * @description Parse the table node object and creates the html table with it
+ * @param {Object} item Object that contains the table node
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parseTable = (item)=>{
+    const { tableStyle: tableStyle, tableRows: tableRows } = item.table;
+    return `<div class="${$5dd49e5016284773$var$TABLE_WRAPPER_CLASS}">
+    <table style="border-collapse: collapse;" class="${$5dd49e5016284773$var$TABLE_CLASS}">
+      ${$5dd49e5016284773$var$createTableHead(tableStyle.tableColumnProperties)}\n
+      ${$5dd49e5016284773$var$createTableRows(tableRows)}
+    </table>
+  </div>`;
+};
+/**
+ * @description Parses the sectionBreak element
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parseBreak = ()=>"";
+const $5dd49e5016284773$export$426db7a6155b7a80 = {
+    paragraph: $5dd49e5016284773$var$parseParagraph,
+    table: $5dd49e5016284773$var$parseTable,
+    sectionBreak: $5dd49e5016284773$var$parseBreak
+};
+/**
+ * @description Parse the content of the body to match all eventual lists
+ * @param {Object} param Object Containing the content and list properties
+ * @returns {Object}
+ */ function $5dd49e5016284773$var$getListsMapping({ content: content, lists: lists }) {
+    const bulletLists = content.filter((line)=>line.paragraph && line.paragraph.bullet);
+    const listKeys = Object.keys(lists).filter((key)=>bulletLists.filter((item)=>item.paragraph.bullet.listId === key).length > 0);
+    const listMap = {
+        openTags: {},
+        closeTags: {}
+    };
+    listKeys.forEach((key)=>{
+        // Handles main lists
+        const foundRootList = bulletLists.filter((item)=>key === item.paragraph.bullet.listId && !item.paragraph.bullet.nestingLevel);
+        const first = foundRootList[0];
+        const last = foundRootList[foundRootList.length - 1];
+        const listElement = lists[key].listProperties.nestingLevels[0].glyphType === "UPPER_ALPHA" ? "ol" : "ul";
+        listMap.openTags[first.startIndex] = `<${listElement}>`;
+        listMap.closeTags[last.startIndex] = `</${listElement}>`;
+        // Handles sub lists
+        const foundSubList = bulletLists.filter((item)=>key === item.paragraph.bullet.listId && item.paragraph.bullet.nestingLevel);
+        if (foundSubList.length > 0) {
+            const firstSub = foundSubList[0];
+            const lastsub = foundSubList[foundSubList.length - 1];
+            const listElementSub = lists[key].listProperties.nestingLevels[1].glyphType === "UPPER_ALPHA" ? "ol" : "ul";
+            listMap.openTags[firstSub.startIndex] = `<${listElementSub}>`;
+            listMap.closeTags[lastsub.startIndex] = `</${listElementSub}>`;
+        }
+    });
+    return listMap;
+}
+/**
+ * @description Parses the main doc object from google docs API and returns the translated html of it
+ * @param {Object} doc The main doc object retrieved from google docs API
+ * @returns {String}
+ */ const $5dd49e5016284773$var$parser = (doc)=>{
+    // get the list of <ul|ol> tags
+    const listMap = $5dd49e5016284773$var$getListsMapping({
+        content: doc.body.content,
+        lists: doc.lists
+    });
+    const html = doc.body.content.map((line)=>{
+        let htmlLine = "";
+        // Injects the start of a list element if found for this line
+        if (listMap.openTags[line.startIndex]) htmlLine += listMap.openTags[line.startIndex];
+        htmlLine += Object.keys($5dd49e5016284773$export$426db7a6155b7a80).map((key)=>{
+            if (line[key]) return $5dd49e5016284773$export$426db7a6155b7a80[key](line);
+        }).join("");
+        // Injects the end of a list element if found for this line
+        if (listMap.closeTags[line.startIndex]) htmlLine += listMap.closeTags[line.startIndex];
+        return htmlLine;
+    }).join("");
+    return html;
+};
+var $5dd49e5016284773$export$2e2bcd8739ae039 = $5dd49e5016284773$var$parser;
+
+
+//# sourceMappingURL=parser.js.map

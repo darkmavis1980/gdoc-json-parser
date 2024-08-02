@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "Google Docs JSON Parser",
   "main": "dist/parser.js",
+  "source": "src/parser.js",
   "scripts": {
     "clean": "rm -Rf dist/",
-    "start": "parcel src/index.html",
-    "build-prod": "parcel build src/parser.js"
+    "start": "parcel ",
+    "build": "parcel build"
   },
   "keywords": [
     "googledocs",
@@ -16,6 +17,6 @@
   "author": "Alessio Michelini",
   "license": "ISC",
   "devDependencies": {
-    "parcel-bundler": "^1.9.4"
+    "parcel": "^2.12.0"
   }
 }
